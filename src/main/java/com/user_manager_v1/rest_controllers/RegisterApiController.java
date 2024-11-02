@@ -25,7 +25,7 @@ public class RegisterApiController {
 
 	@PostMapping("/user/register")
 	public ResponseEntity<String> registerNewUser(@Valid User user, BindingResult result) {
-		
+
 		if (result.hasErrors()) {
 			if (user.getFirstName().isEmpty()) {
 				return new ResponseEntity<>("Please, Insert First Name", HttpStatus.BAD_REQUEST);
@@ -43,14 +43,14 @@ public class RegisterApiController {
 
 		}
 
-		
 		// Encrypt / Hash password
 		String hashed_password = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 
 		user.setPassword(hashed_password);
+
 		userService.registerNewUserServiceMethod(user);
 
-		return new ResponseEntity<>("User Registered Successfuly\n\n", HttpStatus.OK);
+		return new ResponseEntity<>("success", HttpStatus.OK);
 
 	}
 }
